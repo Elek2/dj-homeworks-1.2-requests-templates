@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 
 DATA = {
     'omlet': {
@@ -33,10 +32,13 @@ DATA = {
 
 def ingredients(request, recipe):
     servings = request.GET.get('servings', 1)
+    dish = {}
+    if DATA.get(recipe):  # Если нет такого ключа - ничего не делаем
+        dish.update(DATA.get(recipe))  # Чтобы избежать ссылку на словарь DATA
+        for ingredient in dish:
+            dish[ingredient] = round(dish[ingredient]*int(servings), 1)  # Умножаем грамовки блюд на пар-р servings
     context = {
-        'r': DATA.get(recipe),
-        's': int(servings)
+        'recipe': dish,
     }
-    print(request.GET)
-    print(DATA.get(recipe))
     return render(request, 'calculator/index.html', context)
+
