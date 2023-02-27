@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Рецепты</title>
+</head>
+<body>
+{% load mathfilters %}
+{% for ingredient, amount in r.items %}
+    <p>{{ ingredient }}: {{amount|mul:s}} </p>
+{% empty %}
+    <p>Такого рецепта не знаю :(</p>
+{% endfor %}
+</body>
+</html>
